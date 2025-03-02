@@ -7,6 +7,7 @@ class Tela {
         public int Menu()
         {
             Console.WriteLine(@"
+:::MENU:::
 [1] Novo Item
 [2] Lista de Produtos
 [3] Remover Produtos
@@ -18,10 +19,9 @@ int menu = Convert.ToInt32(Console.ReadLine());
 return menu; 
 
         }
-
-        public Produto PedirProduto()
+        public ControleProduto PedirProduto()
         {
-                Produto produtos = new Produto();
+                ControleProduto produtos = new ControleProduto();
 
                 Console.WriteLine("Informe a licença: ");
                 produtos.Licença = Console.ReadLine();
@@ -38,21 +38,21 @@ return menu;
                 Console.WriteLine("Informe o SKU: ");
                 produtos.SKU = Convert.ToInt32 (Console.ReadLine());
 
-                produtos.Estoque = 0;
+                produtos.EstoqueProduto = 0;
 
                 return produtos;
 
         }
 
-        public string PedirNome()
+        public int PedirSKU()
         {
-                Console.WriteLine("Informe o nome do item: ");
-                return Console.ReadLine();
+                Console.WriteLine("Informe o SKU do item: ");
+                return Convert.ToInt32 (Console.ReadLine());
                 }
 
         public int PedirQtd()
         {
-                Console.WriteLine("Informe a quamtidade de itens: ");
+                Console.WriteLine("Informe a quantidade de itens: ");
                 return Convert.ToInt32 (Console.ReadLine());
         }
 
