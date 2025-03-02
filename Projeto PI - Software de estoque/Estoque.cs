@@ -1,9 +1,12 @@
-class Estoque {
-    Produto[] produtos = new Produto[0];
+using System;
+class ControleEstoque 
 
-    public void Adicionar(Produto produto)
+{
+    ControleProduto[] produtos = new ControleProduto[0];
+
+    public void Adicionar(ControleProduto produto)
     {
-        Produto[] novo = new Produto[produtos.Length + 1];
+        ControleProduto[] novo = new ControleProduto[produtos.Length + 1];
 
         for (int pos = 0; pos < produtos.Length; pos++)
         {
@@ -17,18 +20,46 @@ class Estoque {
 
     public void ListarEstoque()
     {
-        foreach (Produto item in produtos)
+        foreach (ControleProduto item in produtos)
         {
-            Console.WriteLine($"({item.Licença}) {item.NomeItem} - {item.SKU} - {item.Preço} - {item.Fornecedor}::: Estoque: {item.Estoque}");
+            Console.WriteLine("");
+            Console.WriteLine($"[SKU: {item.SKU}] ({item.Licença}) {item.NomeItem} - R${item.Preço} - {item.Fornecedor} ::: Estoque: {item.EstoqueProduto}");
         }
     }
 
-    public void EntradaEstoque(string nome, int qtd)
+    public void Excluir(int SKU)  
     {
-        Produto produto = null;
-        foreach (Produto item in produtos)
+        int indexToRemove = -1;
+        
+        for (int i = 0; i < produtos.Length; i++)
         {
-            if (item.NomeItem == nome)
+            if (produtos[i].SKU == SKU)
+            {
+                indexToRemove = i;
+                break;
+            }
+        }
+        if (indexToRemove >= 0)
+        {
+            ControleProduto[] delete = new ControleProduto[produtos.Length - 1];
+            int newIndex = 0;
+            for (int i = 0; i < produtos.Length; i++)
+            {
+                if (i != indexToRemove)
+                {
+                    delete[newIndex] = produtos[i];
+                    newIndex++;
+                }
+            }
+            produtos = delete;
+    }
+    }
+    public void EntradaEstoque(int SKU, int qtd)
+    {
+        ControleProduto produto = null;
+        foreach (ControleProduto item in produtos)
+        {
+            if (item.SKU == SKU)
             {produto = item;
             break;
             }
@@ -36,9 +67,25 @@ class Estoque {
 
         if (produto != null)
         {
-            produto.Estoque += qtd;
+            produto.EstoqueProduto += qtd;
         }
     }
 
+    public void SaídaEstoque(int SKU, int qtd)
+    {
+                ControleProduto produto = null;
+        foreach (ControleProduto item in produtos)
+        {
+            if (item.SKU == SKU)
+            {produto = item;
+            break;
+            }
+        }
+
+        if (produto != null)
+        {
+            produto.EstoqueProduto -= qtd;
+        }
+    }
 
 }
